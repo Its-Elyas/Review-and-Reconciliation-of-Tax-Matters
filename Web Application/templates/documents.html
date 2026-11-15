@@ -1,0 +1,344 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+
+
+        <!-- Summary -->
+        <section class="row g-3 mb-4">
+
+            <div class="col-6 col-xl-3">
+                <div class="summary-card">
+                    <div class="summary-title">تمام اسناد</div>
+                    <div class="summary-value">۱۲۸</div>
+                </div>
+            </div>
+
+            <div class="col-6 col-xl-3">
+                <div class="summary-card">
+                    <div class="summary-title">در انتظار پیگیری</div>
+                    <div class="summary-value text-warning">۱۸</div>
+                </div>
+            </div>
+
+            <div class="col-6 col-xl-3">
+                <div class="summary-card">
+                    <div class="summary-title">تسویه‌شده</div>
+                    <div class="summary-value text-success">۹۶</div>
+                </div>
+            </div>
+
+            <div class="col-6 col-xl-3">
+                <div class="summary-card">
+                    <div class="summary-title">نیازمند بررسی</div>
+                    <div class="summary-value text-danger">۱۴</div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- Documents -->
+        <section class="content-card">
+
+            <!-- Header -->
+            <div class="card-header-custom">
+
+                <div>
+                    <h6>فهرست اسناد</h6>
+                    <small class="text-muted">
+                        مدیریت و بررسی اسناد مالیاتی
+                    </small>
+                </div>
+
+                <a href="/documents/new" class="btn btn-primary">
+                    <i class="bi bi-plus-lg ms-1"></i>
+                    ثبت سند جدید
+                </a>
+
+            </div>
+
+
+            <!-- Filters -->
+            <div class="card-body-custom border-bottom"
+                 style="border-color:var(--border)!important">
+
+                <div class="row g-3">
+
+                    <div class="col-lg-4">
+
+                        <label class="form-label small">
+                            جستجوی سند
+                        </label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text bg-transparent"
+                                  style="border-color:var(--border);color:var(--muted)">
+                                <i class="bi bi-search"></i>
+                            </span>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="searchInput"
+                                placeholder="شماره مالیاتی یا نام شرکت..."
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-sm-6 col-lg-3">
+
+                        <label class="form-label small">
+                            روش تسویه
+                        </label>
+
+                        <select class="form-select" id="methodFilter">
+
+                            <option value="">همه روش‌ها</option>
+                            <option value="cheque">چک</option>
+                            <option value="transfer">انتقال بانکی</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="col-sm-6 col-lg-3">
+
+                        <label class="form-label small">
+                            وضعیت سند
+                        </label>
+
+                        <select class="form-select" id="statusFilter">
+
+                            <option value="">همه وضعیت‌ها</option>
+                            <option value="pending">در انتظار پیگیری</option>
+                            <option value="success">تسویه‌شده</option>
+                            <option value="overdue">دارای تأخیر</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="col-lg-2 d-flex align-items-end">
+
+                        <button
+                            class="btn btn-outline-custom w-100"
+                            id="resetFilters"
+                            type="button"
+                        >
+                            <i class="bi bi-arrow-counterclockwise ms-1"></i>
+                            پاک کردن
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Table -->
+            <div class="table-responsive">
+
+                <table class="table" id="documentsTable">
+
+                    <thead>
+                        <tr>
+                            <th>شماره مالیاتی</th>
+                            <th>شرکت</th>
+                            <th>تاریخ ثبت</th>
+                            <th>مبلغ (تومان)</th>
+                            <th>روش تسویه</th>
+                            <th>وضعیت</th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr data-method="cheque" data-status="pending">
+
+                            <td>۱۲۳۴۵۶۷۸۹</td>
+                            <td>شرکت نمونه الف</td>
+                            <td>۱۴۰۵/۰۸/۲۰</td>
+                            <td>۱۲۵,۰۰۰,۰۰۰</td>
+                            <td>چک</td>
+
+                            <td>
+                                <span class="status-badge status-pending">
+                                    در انتظار پیگیری
+                                </span>
+                            </td>
+
+                            <td>
+                                <button class="action-btn" title="مشاهده">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+
+                                <button class="action-btn" title="ویرایش">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                            </td>
+
+                        </tr>
+
+
+                        <tr data-method="transfer" data-status="success">
+
+                            <td>۹۸۷۶۵۴۳۲۱</td>
+                            <td>شرکت نمونه ب</td>
+                            <td>۱۴۰۵/۰۸/۱۹</td>
+                            <td>۸۰,۰۰۰,۰۰۰</td>
+                            <td>انتقال بانکی</td>
+
+                            <td>
+                                <span class="status-badge status-success">
+                                    تسویه‌شده
+                                </span>
+                            </td>
+
+                            <td>
+                                <button class="action-btn" title="مشاهده">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+
+                                <button class="action-btn" title="ویرایش">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                            </td>
+
+                        </tr>
+
+
+                        <tr data-method="transfer" data-status="pending">
+
+                            <td>۵۶۷۸۹۰۱۲۳</td>
+                            <td>شرکت نمونه ج</td>
+                            <td>۱۴۰۵/۰۸/۱۸</td>
+                            <td>۴۵,۰۰۰,۰۰۰</td>
+                            <td>انتقال بانکی</td>
+
+                            <td>
+                                <span class="status-badge status-pending">
+                                    در انتظار پیگیری
+                                </span>
+                            </td>
+
+                            <td>
+                                <button class="action-btn" title="مشاهده">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+
+                                <button class="action-btn" title="ویرایش">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                            </td>
+
+                        </tr>
+
+
+                        <tr data-method="cheque" data-status="overdue">
+
+                            <td>۴۵۶۷۸۹۰۱۲</td>
+                            <td>شرکت نمونه د</td>
+                            <td>۱۴۰۵/۰۸/۱۵</td>
+                            <td>۹۰,۰۰۰,۰۰۰</td>
+                            <td>چک</td>
+
+                            <td>
+                                <span class="status-badge status-danger">
+                                    دارای تأخیر
+                                </span>
+                            </td>
+
+                            <td>
+                                <button class="action-btn" title="مشاهده">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+
+                                <button class="action-btn" title="ویرایش">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                            </td>
+
+                        </tr>
+
+
+                        <tr data-method="cheque" data-status="success">
+
+                            <td>۳۴۵۶۷۸۹۰۱</td>
+                            <td>شرکت نمونه ه</td>
+                            <td>۱۴۰۵/۰۸/۱۲</td>
+                            <td>۶۰,۰۰۰,۰۰۰</td>
+                            <td>چک</td>
+
+                            <td>
+                                <span class="status-badge status-success">
+                                    تسویه‌شده
+                                </span>
+                            </td>
+
+                            <td>
+                                <button class="action-btn" title="مشاهده">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+
+                                <button class="action-btn" title="ویرایش">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- Footer -->
+            <div class="card-body-custom d-flex flex-wrap
+                        justify-content-between align-items-center gap-3">
+
+                <small class="text-muted" id="resultCount">
+                    نمایش ۵ سند
+                </small>
+
+                <nav>
+                    <ul class="pagination pagination-sm mb-0">
+
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">قبلی</a>
+                        </li>
+
+                        <li class="page-item active">
+                            <a class="page-link" href="#">۱</a>
+                        </li>
+
+                        <li class="page-item">
+                            <a class="page-link" href="#">۲</a>
+                        </li>
+
+                        <li class="page-item">
+                            <a class="page-link" href="#">۳</a>
+                        </li>
+
+                        <li class="page-item">
+                            <a class="page-link" href="#">بعدی</a>
+                        </li>
+
+                    </ul>
+                </nav>
+
+            </div>
+
+        </section>
+
+{% endblock content %}

@@ -1,0 +1,64 @@
+{% include 'layout/header.html' %}
+{% include 'layout/sidebar.html' %}
+
+<body>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Topbar -->
+        <header class="topbar">
+
+            <div class="d-flex align-items-center gap-3">
+
+                <button
+                    class="icon-button mobile-menu"
+                    id="mobileMenu"
+                    type="button"
+                >
+                    <i class="bi bi-list fs-5"></i>
+                </button>
+
+                <div>
+                    <h1 class="page-title">داشبورد</h1>
+                    <small class="text-muted">
+                        نمای کلی وضعیت اسناد و پرداخت‌ها
+                    </small>
+                </div>
+
+            </div>
+
+
+            <div class="topbar-actions">
+
+                <button
+                    class="icon-button"
+                    id="themeToggle"
+                    type="button"
+                    title="تغییر پوسته"
+                >
+                    <i class="bi bi-moon-stars"></i>
+                </button>
+
+                <button class="icon-button" type="button">
+                    <i class="bi bi-bell"></i>
+                </button>
+
+                <div class="d-none d-sm-block text-end me-2">
+                    <div class="fw-semibold small">مدیر سیستم</div>
+                    <small class="text-muted">مدیریت</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        {% block content %}
+            
+        {% endblock %}
+
+
+    </main>
+
+{% include 'layout/footer.html' %}

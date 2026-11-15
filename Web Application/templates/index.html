@@ -1,0 +1,404 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+    <!-- Statistics -->
+        <section class="row g-3 mb-4">
+
+            <div class="col-6 col-xl-3">
+                <div class="stat-card">
+
+                    <div class="d-flex justify-content-between">
+
+                        <span class="stat-title">کل اسناد</span>
+
+                        <div
+                            class="stat-icon"
+                            style="background:#edf4ff;color:#3478f6"
+                        >
+                            <i class="bi bi-files"></i>
+                        </div>
+
+                    </div>
+
+                    <div class="stat-value">۱۲۸</div>
+
+                    <div class="stat-title">تمام اسناد ثبت‌شده</div>
+
+                </div>
+            </div>
+
+
+            <div class="col-6 col-xl-3">
+                <div class="stat-card">
+
+                    <div class="d-flex justify-content-between">
+
+                        <span class="stat-title">در انتظار پیگیری</span>
+
+                        <div
+                            class="stat-icon"
+                            style="background:#fff4df;color:#d69e2e"
+                        >
+                            <i class="bi bi-clock-history"></i>
+                        </div>
+
+                    </div>
+
+                    <div class="stat-value">۱۸</div>
+
+                    <div class="stat-title">نیازمند اقدام در سامانه</div>
+
+                </div>
+            </div>
+
+
+            <div class="col-6 col-xl-3">
+                <div class="stat-card">
+
+                    <div class="d-flex justify-content-between">
+
+                        <span class="stat-title">سررسید امروز</span>
+
+                        <div
+                            class="stat-icon"
+                            style="background:#fff0f0;color:#e05252"
+                        >
+                            <i class="bi bi-calendar-event"></i>
+                        </div>
+
+                    </div>
+
+                    <div class="stat-value">۴</div>
+
+                    <div class="stat-title">چک‌های سررسیدشده</div>
+
+                </div>
+            </div>
+
+
+            <div class="col-6 col-xl-3">
+                <div class="stat-card">
+
+                    <div class="d-flex justify-content-between">
+
+                        <span class="stat-title">تسویه‌شده</span>
+
+                        <div
+                            class="stat-icon"
+                            style="background:#e7f8ee;color:#239b56"
+                        >
+                            <i class="bi bi-check-circle"></i>
+                        </div>
+
+                    </div>
+
+                    <div class="stat-value">۹۶</div>
+
+                    <div class="stat-title">تکمیل فرآیند تسویه</div>
+
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- Reminders -->
+        <section class="row g-3 mb-4">
+
+            <div class="col-lg-6">
+
+                <div class="content-card">
+
+                    <div class="card-header-custom">
+
+                        <h6>
+                            <i class="bi bi-calendar-event ms-2 text-danger"></i>
+                            چک‌های سررسیدشده
+                        </h6>
+
+                        <a href="#" class="small text-primary">
+                            مشاهده همه
+                        </a>
+
+                    </div>
+
+
+                    <div class="card-body-custom">
+
+                        <div class="reminder-item">
+
+                            <div class="reminder-info">
+
+                                <div
+                                    class="reminder-icon"
+                                    style="background:#fff0f0;color:#e05252"
+                                >
+                                    <i class="bi bi-receipt"></i>
+                                </div>
+
+                                <div>
+                                    <div class="reminder-title">
+                                        شرکت نمونه الف
+                                    </div>
+
+                                    <div class="reminder-subtitle">
+                                        سررسید: امروز
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <span class="text-muted small">
+                                ۱۲۵ میلیون
+                            </span>
+
+                        </div>
+
+
+                        <div class="reminder-item">
+
+                            <div class="reminder-info">
+
+                                <div
+                                    class="reminder-icon"
+                                    style="background:#fff0f0;color:#e05252"
+                                >
+                                    <i class="bi bi-receipt"></i>
+                                </div>
+
+                                <div>
+                                    <div class="reminder-title">
+                                        شرکت نمونه ب
+                                    </div>
+
+                                    <div class="reminder-subtitle">
+                                        سررسید: دیروز
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <span class="text-muted small">
+                                ۸۰ میلیون
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-6">
+
+                <div class="content-card">
+
+                    <div class="card-header-custom">
+
+                        <h6>
+                            <i class="bi bi-arrow-left-right ms-2 text-primary"></i>
+                            انتقال‌های نیازمند پیگیری
+                        </h6>
+
+                        <a href="#" class="small text-primary">
+                            مشاهده همه
+                        </a>
+
+                    </div>
+
+
+                    <div class="card-body-custom">
+
+                        <div class="reminder-item">
+
+                            <div class="reminder-info">
+
+                                <div
+                                    class="reminder-icon"
+                                    style="background:#edf4ff;color:#3478f6"
+                                >
+                                    <i class="bi bi-bank"></i>
+                                </div>
+
+                                <div>
+                                    <div class="reminder-title">
+                                        شرکت نمونه ج
+                                    </div>
+
+                                    <div class="reminder-subtitle">
+                                        انتقال انجام شده؛ ثبت تسویه باقی مانده
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <span class="text-muted small">
+                                ۴۵ میلیون
+                            </span>
+
+                        </div>
+
+
+                        <div class="reminder-item">
+
+                            <div class="reminder-info">
+
+                                <div
+                                    class="reminder-icon"
+                                    style="background:#edf4ff;color:#3478f6"
+                                >
+                                    <i class="bi bi-bank"></i>
+                                </div>
+
+                                <div>
+                                    <div class="reminder-title">
+                                        شرکت نمونه د
+                                    </div>
+
+                                    <div class="reminder-subtitle">
+                                        نیازمند پیگیری در سامانه
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <span class="text-muted small">
+                                ۹۰ میلیون
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Latest Documents -->
+        <section class="content-card">
+
+            <div class="card-header-custom">
+
+                <div>
+                    <h6>آخرین اسناد ثبت‌شده</h6>
+
+                    <small class="text-muted">
+                        فهرست آخرین اسناد ثبت‌شده در سیستم
+                    </small>
+                </div>
+
+
+                <a href="#" class="btn btn-primary">
+                    <i class="bi bi-plus-lg ms-1"></i>
+                    ثبت سند جدید
+                </a>
+
+            </div>
+
+
+            <div class="table-responsive">
+
+                <table class="table">
+
+                    <thead>
+                        <tr>
+                            <th>شماره مالیاتی</th>
+                            <th>شرکت</th>
+                            <th>مبلغ</th>
+                            <th>روش تسویه</th>
+                            <th>وضعیت</th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>۱۲۳۴۵۶۷۸۹</td>
+
+                            <td>شرکت نمونه الف</td>
+
+                            <td>۱۲۵,۰۰۰,۰۰۰</td>
+
+                            <td>چک</td>
+
+                            <td>
+                                <span class="status-badge status-pending">
+                                    در انتظار پیگیری
+                                </span>
+                            </td>
+
+                            <td>
+                                <button class="btn btn-sm btn-outline-custom">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>۹۸۷۶۵۴۳۲۱</td>
+
+                            <td>شرکت نمونه ب</td>
+
+                            <td>۸۰,۰۰۰,۰۰۰</td>
+
+                            <td>انتقال بانکی</td>
+
+                            <td>
+                                <span class="status-badge status-success">
+                                    تسویه‌شده
+                                </span>
+                            </td>
+
+                            <td>
+                                <button class="btn btn-sm btn-outline-custom">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>۵۶۷۸۹۰۱۲۳</td>
+
+                            <td>شرکت نمونه ج</td>
+
+                            <td>۴۵,۰۰۰,۰۰۰</td>
+
+                            <td>انتقال بانکی</td>
+
+                            <td>
+                                <span class="status-badge status-pending">
+                                    در انتظار پیگیری
+                                </span>
+                            </td>
+
+                            <td>
+                                <button class="btn btn-sm btn-outline-custom">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+{% endblock %}
