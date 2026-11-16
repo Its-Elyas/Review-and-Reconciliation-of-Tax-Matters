@@ -1,0 +1,507 @@
+
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+<div class="container-fluid py-4">
+
+    <!-- Page Header -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+
+        <div>
+            <h4 class="fw-bold mb-1">بانک ها</h4>
+            <p class="text-muted mb-0 small">
+                مدیریت بانک های مرتبط با اسناد مالیاتی
+            </p>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button
+    type="button"
+    class="btn btn-primary"
+    onclick="openBankModal('create')"
+>
+    <i class="bi bi-plus-lg ms-1"></i>
+    ثبت بانک
+</button>
+        </div>
+
+    </div>
+
+
+
+    <!-- Payments Table -->
+    <section class="content-card">
+
+        <div class="card-heading d-flex justify-content-between align-items-center">
+
+            <div>
+                <h6 class="mb-1">لیست بانک ها</h6>
+                <small class="text-muted">
+                    فهرست بانک های ثبت‌شده
+                </small>
+            </div>
+
+            <span class="badge bg-secondary-subtle text-secondary">
+                ۳۰ پرداختی
+            </span>
+
+        </div>
+
+
+        <div class="table-responsive">
+
+            <table class="table custom-table align-middle mb-0">
+
+                <thead>
+                    <tr>
+                        <th>نام بانک</th>
+                        <th>شعبه</th>
+                        <th>اطلاعات بانکی</th>
+                        <th>اسناد مالیاتی</th>
+                        <th>مبلغ</th>
+                        <th class="text-center">عملیات</th>
+                    </tr>
+                </thead>
+
+
+                <tbody id="paymentsTable">
+
+                    <!-- Cheque -->
+                    <tr
+                        data-type="cheque"
+                        data-status="pending"
+                        data-search="چک شرکت آریا بانک ملت 123456 234567"
+                    >
+
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="payment-type-icon cheque-icon">
+                                    <i class="bi bi-receipt"></i>
+                                </div>
+
+                                <div>
+                                    <strong class="d-block">چک</strong>
+                                    <small class="text-muted">شماره ۱۲۵۴</small>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>شرکت آریا</td>
+
+                        <td>
+                            <strong class="d-block">بانک ملت</strong>
+                            <small class="text-muted">شماره چک: ۱۲۵۴</small>
+                        </td>
+
+                        <td>
+                            <span class="tax-count">۲ سند</span>
+                            <small class="d-block text-muted">123456 ، 234567</small>
+                        </td>
+
+                        <td>
+                            <strong>۱۲۰,۰۰۰,۰۰۰</strong>
+                            <small class="d-block text-muted">تومان</small>
+                        </td>
+
+                        
+
+                        <td>
+    <div class="d-flex justify-content-center gap-1">
+
+        <button
+            type="button"
+            class="btn btn-sm btn-light action-btn"
+            title="مشاهده"
+            onclick="openBankModal('view', this)"
+            data-id="1"
+            data-name="بانک ملت"
+            data-branch="شعبه مرکزی اصفهان"
+            data-account="1234567890"
+            data-card="6037991234567890"
+            data-sheba="IR123456789012345678901234"
+            data-owner="شرکت آریا"
+        >
+            <i class="bi bi-eye"></i>
+        </button>
+
+        <button
+            type="button"
+            class="btn btn-sm btn-light action-btn"
+            title="ویرایش"
+            onclick="openBankModal('edit', this)"
+            data-id="1"
+            data-name="بانک ملت"
+            data-branch="شعبه مرکزی اصفهان"
+            data-account="1234567890"
+            data-card="6037991234567890"
+            data-sheba="IR123456789012345678901234"
+            data-owner="شرکت آریا"
+        >
+            <i class="bi bi-pencil"></i>
+        </button>
+
+    </div>
+</td>
+
+                    </tr>
+
+
+                    
+
+
+                    <!-- Empty result -->
+                    <tr id="emptyPaymentResult" class="d-none">
+                        <td colspan="8" class="text-center py-5">
+                            <i class="bi bi-search fs-3 text-muted d-block mb-2"></i>
+                            <span class="text-muted">
+                                پرداختی‌ای با این مشخصات پیدا نشد.
+                            </span>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- Pagination -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center p-3 gap-2">
+
+            <small class="text-muted" id="paymentResultCount">
+                نمایش ۳ پرداختی
+            </small>
+
+            <nav>
+                <ul class="pagination pagination-sm mb-0">
+                    <li class="page-item disabled">
+                        <a class="page-link">قبلی</a>
+                    </li>
+
+                    <li class="page-item active">
+                        <a class="page-link">۱</a>
+                    </li>
+
+                    <li class="page-item">
+                        <a class="page-link">۲</a>
+                    </li>
+
+                    <li class="page-item">
+                        <a class="page-link">بعدی</a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+
+<!-- Bank Modal -->
+<div
+    class="modal fade"
+    id="bankModal"
+    tabindex="-1"
+    aria-hidden="true"
+    dir="rtl"
+>
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+
+        <div class="modal-content bank-modal-content">
+
+            <!-- Header -->
+            <div class="modal-header">
+
+                <div class="d-flex align-items-center gap-3">
+
+                    <div class="bank-modal-icon">
+                        <i class="bi bi-bank"></i>
+                    </div>
+
+                    <div>
+                        <h5 class="modal-title fw-bold mb-1" id="bankModalTitle">
+                            ثبت بانک جدید
+                        </h5>
+
+                        <small class="text-muted" id="bankModalSubtitle">
+                            اطلاعات بانک را وارد کنید.
+                        </small>
+                    </div>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="btn-close ms-0"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
+            </div>
+
+
+            <!-- Body -->
+            <div class="modal-body p-4">
+
+                <form id="bankForm" method="POST" action="/banks/create">
+
+                    <input type="hidden" name="bank_id" id="bankId">
+
+                    <div class="row g-3">
+
+                        <!-- Bank Name -->
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                نام بانک
+                                <span class="text-danger">*</span>
+                            </label>
+
+                            <select
+                                class="form-select bank-field"
+                                name="name"
+                                id="bankName"
+                                required
+                            >
+                                <option value="">انتخاب بانک</option>
+                                <option value="بانک ملی">بانک ملی</option>
+                                <option value="بانک ملت">بانک ملت</option>
+                                <option value="بانک تجارت">بانک تجارت</option>
+                                <option value="بانک صادرات">بانک صادرات</option>
+                                <option value="بانک سپه">بانک سپه</option>
+                                <option value="بانک پاسارگاد">بانک پاسارگاد</option>
+                                <option value="بانک سامان">بانک سامان</option>
+                                <option value="بانک پارسیان">بانک پارسیان</option>
+                                <option value="سایر">سایر</option>
+                            </select>
+
+                        </div>
+
+
+                        <!-- Branch -->
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                نام شعبه
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control bank-field"
+                                name="branch"
+                                id="bankBranch"
+                                placeholder="مثلاً شعبه مرکزی"
+                            >
+
+                        </div>
+
+
+                        <!-- Account Number -->
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                شماره حساب
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control bank-field"
+                                name="account_number"
+                                id="bankAccount"
+                                placeholder="شماره حساب"
+                                dir="ltr"
+                            >
+
+                        </div>
+
+
+                        <!-- Card Number -->
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                شماره کارت
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control bank-field"
+                                name="card_number"
+                                id="bankCard"
+                                placeholder="شماره کارت بانکی"
+                                dir="ltr"
+                            >
+
+                        </div>
+
+
+                        <!-- Sheba -->
+                        <div class="col-12">
+
+                            <label class="form-label">
+                                شماره شبا
+                            </label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-text">
+                                    IR
+                                </span>
+
+                                <input
+                                    type="text"
+                                    class="form-control bank-field"
+                                    name="sheba"
+                                    id="bankSheba"
+                                    placeholder="شماره شبا بدون IR"
+                                    maxlength="24"
+                                    dir="ltr"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Account Owner -->
+                        <div class="col-12">
+
+                            <label class="form-label">
+                                نام صاحب حساب
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control bank-field"
+                                name="account_owner"
+                                id="bankOwner"
+                                placeholder="نام شخص یا شرکت صاحب حساب"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Footer -->
+                    <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top bank-modal-footer">
+
+                        <button
+                            type="button"
+                            class="btn btn-outline-custom"
+                            data-bs-dismiss="modal"
+                        >
+                            بستن
+                        </button>
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                            id="bankSubmitBtn"
+                        >
+                            <i class="bi bi-check2 ms-1"></i>
+                            ثبت بانک
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+{% endblock content %}
+
+{% block script %}
+
+<script>
+
+const bankDetailsModal = new bootstrap.Modal(
+    document.getElementById('bankDetailsModal')
+);
+
+function showBankDetails(button) {
+
+    const data = button.dataset;
+
+    document.getElementById('detailBankName').textContent = data.name || '-';
+    document.getElementById('detailBankName2').textContent = data.name || '-';
+
+    document.getElementById('detailBankBranch').textContent = data.branch || '-';
+    document.getElementById('detailBranch').textContent = data.branch || '-';
+
+    document.getElementById('detailBankId').textContent = `BK-${data.id}`;
+    document.getElementById('detailBankCode').textContent = data.code || '-';
+
+    document.getElementById('detailAccount').textContent = data.account || '-';
+    document.getElementById('detailCard').textContent = data.card || '-';
+    document.getElementById('detailSheba').textContent = data.sheba || '-';
+
+    document.getElementById('detailOwner').textContent = data.owner || '-';
+
+    document.getElementById('detailChequeCount').textContent =
+        new Intl.NumberFormat('fa-IR').format(data.cheques || 0);
+
+    document.getElementById('detailTransferCount').textContent =
+        new Intl.NumberFormat('fa-IR').format(data.transfers || 0);
+
+    const status = document.getElementById('detailBankStatus');
+
+    status.textContent = data.status || 'فعال';
+
+    const editButton = document.getElementById('detailEditBankBtn');
+
+    editButton.onclick = () => {
+        bankDetailsModal.hide();
+
+        // باز کردن مدال ویرایش قبلی
+        const editTrigger = document.querySelector(
+            `.edit-bank-btn[data-id="${CSS.escape(data.id)}"]`
+        );
+
+        if (editTrigger) {
+            openBankModal('edit', editTrigger);
+        }
+    };
+
+    bankDetailsModal.show();
+}
+
+
+// Copy buttons
+document.querySelectorAll('.copy-detail-btn').forEach(button => {
+
+    button.addEventListener('click', async () => {
+
+        const targetId = button.dataset.copyTarget;
+        const value = document.getElementById(targetId).textContent.trim();
+
+        try {
+            await navigator.clipboard.writeText(value);
+
+            button.innerHTML = '<i class="bi bi-check2"></i>';
+
+            setTimeout(() => {
+                button.innerHTML = '<i class="bi bi-copy"></i>';
+            }, 1200);
+
+        } catch (error) {
+            console.error('Copy failed:', error);
+        }
+
+    });
+
+});
+
+</script>
+
+
+
+{% endblock script %}

@@ -133,6 +133,43 @@ a {
     padding: 28px 32px;
 }
 
+.content-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 18px;
+}
+
+.card-heading {
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.heading-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 9px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-heading h6 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.card-body-custom {
+    padding: 22px;
+}
+
 .topbar {
     display: flex;
     align-items: center;
@@ -413,4 +450,646 @@ a {
     .page-title {
         font-size: 18px;
     }
+}
+
+
+/* Summary */
+
+.summary-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 17px 20px;
+    height: 100%;
+}
+
+.summary-title {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.summary-value {
+    font-size: 23px;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+
+/* Filters */
+
+.form-control,
+.form-select {
+    background-color: var(--surface);
+    color: var(--text);
+    border-color: var(--border);
+    border-radius: 8px;
+    font-size: 12px;
+    min-height: 42px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--surface);
+    color: var(--text);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(52, 120, 246, .10);
+}
+
+.form-control::placeholder {
+    color: var(--muted);
+}
+
+
+/* Table */
+
+.table {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--text);
+    --bs-table-border-color: var(--border);
+    margin: 0;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.table thead th {
+    color: var(--muted);
+    font-weight: 500;
+    padding: 15px 18px;
+    background: var(--surface-hover);
+    border-bottom: 1px solid var(--border);
+}
+
+.table tbody td {
+    padding: 16px 18px;
+    vertical-align: middle;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table tbody tr:hover td {
+    background: var(--surface-hover);
+}
+
+
+/* Badges */
+
+.status-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.status-pending {
+    background: #fff4df;
+    color: #b7791f;
+}
+
+.status-success {
+    background: #e4f7ec;
+    color: #20844b;
+}
+
+.status-danger {
+    background: #fff0f0;
+    color: #d34b4b;
+}
+
+[data-bs-theme="dark"] .status-pending {
+    background: #493b22;
+    color: #f6c66c;
+}
+
+[data-bs-theme="dark"] .status-success {
+    background: #1c4433;
+    color: #83d6a6;
+}
+
+[data-bs-theme="dark"] .status-danger {
+    background: #492b32;
+    color: #f29aa3;
+}
+
+
+/* Buttons */
+
+.btn-primary {
+    background: var(--primary);
+    border-color: var(--primary);
+    border-radius: 8px;
+    font-size: 12px;
+    padding: 9px 15px;
+}
+
+.btn-outline-custom {
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+.btn-outline-custom:hover {
+    background: var(--surface-hover);
+    color: var(--text);
+    border-color: var(--border);
+}
+
+.action-btn {
+    width: 31px;
+    height: 31px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    background: var(--surface);
+    color: var(--muted);
+}
+
+.action-btn:hover {
+    color: var(--primary);
+    background: var(--surface-hover);
+}
+
+
+/* Pagination */
+
+.pagination .page-link {
+    background: var(--surface);
+    border-color: var(--border);
+    color: var(--text);
+    font-size: 12px;
+}
+
+.pagination .page-item.active .page-link {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+
+/* Mobile */
+
+.mobile-menu,
+.sidebar-overlay {
+    display: none;
+}
+
+@media (max-width: 991px) {
+    .sidebar {
+        transform: translateX(100%);
+    }
+    .sidebar.show {
+        transform: translateX(0);
+    }
+    .sidebar-overlay.show {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, .4);
+        z-index: 1030;
+    }
+    .main-content {
+        margin-right: 0;
+        padding: 20px;
+    }
+    .mobile-menu {
+        display: flex;
+    }
+}
+
+@media (max-width: 576px) {
+    .main-content {
+        padding: 16px;
+    }
+    .page-title {
+        font-size: 18px;
+    }
+    .card-header-custom {
+        align-items: flex-start;
+    }
+}
+
+.form-label {
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--text);
+}
+
+.form-control,
+.form-select {
+    min-height: 43px;
+    background-color: var(--surface);
+    color: var(--text);
+    border-color: var(--border);
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--surface);
+    color: var(--text);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(52, 120, 246, .10);
+}
+
+.form-control::placeholder {
+    color: var(--muted);
+}
+
+.form-text {
+    font-size: 10px;
+    color: var(--muted);
+}
+
+.payment-option {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: .2s;
+    height: 100%;
+}
+
+.payment-option:has(input:checked) {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+}
+
+.payment-option input {
+    accent-color: var(--primary);
+}
+
+.payment-option i {
+    font-size: 21px;
+    color: var(--primary);
+}
+
+.payment-option strong {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.payment-option small {
+    display: block;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+}
+
+.conditional-section {
+    display: none;
+}
+
+.conditional-section.show {
+    display: block;
+}
+
+.cheque-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 13px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    margin-top: 10px;
+}
+
+.cheque-item small {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.cheque-item strong {
+    font-size: 12px;
+}
+
+.empty-cheques {
+    padding: 22px;
+    border: 1px dashed var(--border);
+    border-radius: 9px;
+    color: var(--muted);
+    text-align: center;
+    font-size: 12px;
+}
+
+.modal-content {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+}
+
+.modal-header,
+.modal-footer {
+    border-color: var(--border);
+}
+
+.btn-close {
+    filter: var(--bs-btn-close-filter, none);
+}
+
+[data-bs-theme="dark"] .btn-close {
+    filter: invert(1);
+}
+
+.mobile-menu,
+.sidebar-overlay {
+    display: none;
+}
+
+@media (max-width: 991px) {
+    .sidebar {
+        transform: translateX(100%);
+    }
+    .sidebar.show {
+        transform: translateX(0);
+    }
+    .sidebar-overlay.show {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, .4);
+        z-index: 1030;
+    }
+    .main-content {
+        margin-right: 0;
+        padding: 20px;
+    }
+    .mobile-menu {
+        display: flex;
+    }
+}
+
+@media (max-width: 576px) {
+    .main-content {
+        padding: 16px;
+    }
+    .page-title {
+        font-size: 18px;
+    }
+    .card-body-custom {
+        padding: 17px;
+    }
+}
+
+.form-label {
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--text);
+}
+
+.form-control,
+.form-select {
+    min-height: 43px;
+    background-color: var(--surface);
+    color: var(--text);
+    border-color: var(--border);
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--surface);
+    color: var(--text);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(52, 120, 246, .10);
+}
+
+.form-control::placeholder {
+    color: var(--muted);
+}
+
+.form-text {
+    font-size: 10px;
+    color: var(--muted);
+}
+
+.btn-primary {
+    background: var(--primary);
+    border-color: var(--primary);
+    border-radius: 8px;
+    font-size: 12px;
+    padding: 10px 17px;
+}
+
+.btn-outline-custom {
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 12px;
+    padding: 9px 15px;
+}
+
+.btn-outline-custom:hover {
+    background: var(--surface-hover);
+    color: var(--text);
+    border-color: var(--border);
+}
+
+.payment-option {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: .2s;
+    height: 100%;
+}
+
+.payment-option:has(input:checked) {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+}
+
+.payment-option input {
+    accent-color: var(--primary);
+}
+
+.payment-option i {
+    font-size: 21px;
+    color: var(--primary);
+}
+
+.payment-option strong {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.payment-option small {
+    display: block;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+}
+
+.conditional-section {
+    display: none;
+}
+
+.conditional-section.show {
+    display: block;
+}
+
+.cheque-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 13px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    margin-top: 10px;
+}
+
+.cheque-item small {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.cheque-item strong {
+    font-size: 12px;
+}
+
+.empty-cheques {
+    padding: 22px;
+    border: 1px dashed var(--border);
+    border-radius: 9px;
+    color: var(--muted);
+    text-align: center;
+    font-size: 12px;
+}
+
+.modal-content {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+}
+
+.modal-header,
+.modal-footer {
+    border-color: var(--border);
+}
+
+.btn-close {
+    filter: var(--bs-btn-close-filter, none);
+}
+
+[data-bs-theme="dark"] .btn-close {
+    filter: invert(1);
+}
+
+.tax-number-item {
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--card-bg);
+    margin-bottom: 10px;
+    animation: taxItemIn .2s ease;
+}
+
+.tax-number-item .form-label {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.tax-number-item .form-control {
+    min-height: 42px;
+}
+
+.tax-number-item .remove-tax-number {
+    height: 42px;
+    width: 42px;
+}
+
+@keyframes taxItemIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.bank-modal-content {
+    background: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.bank-modal-content .modal-header {
+    border-bottom: 1px solid var(--border);
+    padding: 20px 24px;
+}
+
+.bank-modal-content .modal-body {
+    background: var(--card-bg);
+}
+
+.bank-modal-icon {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: rgba(13, 110, 253, .10);
+    color: var(--primary);
+    font-size: 21px;
+}
+
+.bank-modal-content .form-label {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.bank-modal-content .form-control,
+.bank-modal-content .form-select,
+.bank-modal-content .input-group-text {
+    min-height: 43px;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-color: var(--border);
+}
+
+.bank-modal-content .form-control:focus,
+.bank-modal-content .form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 .2rem rgba(13, 110, 253, .10);
+}
+
+.bank-modal-content .modal-title {
+    font-size: 16px;
+}
+
+.bank-modal-footer {
+    border-color: var(--border) !important;
+}
+
+.bank-modal-content .btn-close {
+    filter: var(--modal-close-filter, none);
+}
+
+.bank-modal-content input:disabled,
+.bank-modal-content select:disabled {
+    opacity: .85;
+    cursor: default;
 }

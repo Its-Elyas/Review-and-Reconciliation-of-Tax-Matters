@@ -1,0 +1,191 @@
+{% extends 'layout/base.html' %}
+
+
+{% block content %}
+
+<div class="btn btn-sm btn-success mb-3">
+    <i class="bi bi-file-earmark-spreadsheet"></i>
+    ورود از اکسل
+</div>
+<form method="POST" action="/documents/new" id="documentForm">
+
+            <!-- Basic Information -->
+            <section class="content-card">
+
+                <div class="card-heading">
+                    <div class="heading-icon">
+                        <i class="bi bi-file-earmark-text"></i>
+                    </div>
+
+                    <div>
+                        <h6>اطلاعات اصلی سند</h6>
+                        <small class="text-muted">
+                            مشخصات سند ثبت‌شده در سامانه مالیاتی
+                        </small>
+                    </div>
+                    
+                </div>
+                
+
+
+                <div class="card-body-custom">
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                شماره مالیاتی
+                                <span class="text-danger">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                name="tax_number"
+                                class="form-control"
+                                placeholder="شماره مالیاتی سند را وارد کنید"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                شرکت
+                                <span class="text-danger">*</span>
+                            </label>
+
+                            <select name="company_id" class="form-select" required>
+                                <option value="">انتخاب شرکت</option>
+                                <option value="1">شرکت نمونه الف</option>
+                                <option value="2">شرکت نمونه ب</option>
+                                <option value="3">شرکت نمونه ج</option>
+                            </select>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                تاریخ ثبت سند
+                                <span class="text-danger">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                name="date"
+                                class="form-control"
+                                placeholder="مثلاً ۱۴۰۵/۰۸/۲۵"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                مبلغ سند (تومان)
+                                <span class="text-danger">*</span>
+                            </label>
+
+                            <input
+                                type="number"
+                                name="price"
+                                id="documentPrice"
+                                class="form-control"
+                                min="1"
+                                step="1"
+                                placeholder="مبلغ سند را وارد کنید"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            
+
+
+            <!-- Form Actions -->
+            <div class="d-flex flex-wrap justify-content-end gap-2 mb-4">
+
+                <a href="/documents" class="btn btn-outline-custom">
+                    انصراف
+                </a>
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check2 ms-1"></i>
+                    ثبت سند
+                </button>
+
+            </div>
+
+        </form>
+
+{% endblock content %}
+
+{% block script %}
+<script>
+
+        // Theme
+
+        const html = document.documentElement;
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+
+        function setTheme(theme) {
+
+            html.setAttribute('data-bs-theme', theme);
+
+            themeIcon.className = theme === 'dark'
+                ? 'bi bi-sun'
+                : 'bi bi-moon-stars';
+
+            localStorage.setItem('dashboard-theme', theme);
+        }
+
+        setTheme(
+            localStorage.getItem('dashboard-theme') || 'light'
+        );
+
+        themeToggle.addEventListener('click', () => {
+
+            const currentTheme =
+                html.getAttribute('data-bs-theme');
+
+            setTheme(
+                currentTheme === 'dark' ? 'light' : 'dark'
+            );
+
+        });
+
+
+        // Mobile Sidebar
+
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+
+        document.getElementById('mobileMenu').addEventListener('click', () => {
+            sidebar.classList.toggle('show');
+            overlay.classList.toggle('show');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('show');
+            overlay.classList.remove('show');
+        });
+
+
+        
+
+    </script>
+{% endblock script %}

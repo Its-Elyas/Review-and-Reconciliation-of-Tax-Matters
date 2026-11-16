@@ -1,0 +1,661 @@
+
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+<div class="container-fluid py-4">
+
+    <!-- Page Header -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+
+        <div>
+            <h4 class="fw-bold mb-1">پرداختی‌ها</h4>
+            <p class="text-muted mb-0 small">
+                مدیریت چک‌ها و حواله‌های بانکی مرتبط با اسناد مالیاتی
+            </p>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button class="btn btn-outline-success">
+                <i class="bi bi-file-earmark-excel ms-1"></i>
+                خروجی اکسل
+            </button>
+
+            <a href="/payments/new" class="btn btn-primary">
+                <i class="bi bi-plus-lg ms-1"></i>
+                ثبت پرداختی
+            </a>
+        </div>
+
+    </div>
+
+
+    <!-- Statistics -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-xl-3 col-md-6">
+            <div class="content-card stat-card">
+                <div class="stat-icon bg-primary-subtle text-primary">
+                    <i class="bi bi-wallet2"></i>
+                </div>
+
+                <div>
+                    <small class="text-muted">مجموع پرداختی‌ها</small>
+                    <h5 class="fw-bold mb-0 mt-1">۸۵۰ میلیون</h5>
+                    <small class="text-muted">تومان</small>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xl-3 col-md-6">
+            <div class="content-card stat-card">
+                <div class="stat-icon bg-warning-subtle text-warning">
+                    <i class="bi bi-receipt"></i>
+                </div>
+
+                <div>
+                    <small class="text-muted">چک‌های ثبت‌شده</small>
+                    <h5 class="fw-bold mb-0 mt-1">۱۸ عدد</h5>
+                    <small class="text-muted">۴ چک در انتظار سررسید</small>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xl-3 col-md-6">
+            <div class="content-card stat-card">
+                <div class="stat-icon bg-info-subtle text-info">
+                    <i class="bi bi-bank"></i>
+                </div>
+
+                <div>
+                    <small class="text-muted">حواله‌های بانکی</small>
+                    <h5 class="fw-bold mb-0 mt-1">۱۲ مورد</h5>
+                    <small class="text-muted">مجموع ۳۲۰ میلیون تومان</small>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xl-3 col-md-6">
+            <div class="content-card stat-card">
+                <div class="stat-icon bg-danger-subtle text-danger">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+
+                <div>
+                    <small class="text-muted">نیازمند پیگیری</small>
+                    <h5 class="fw-bold mb-0 mt-1">۷ مورد</h5>
+                    <small class="text-muted">ثبت وضعیت در سامانه مالیاتی</small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Filters -->
+    <section class="content-card mb-4">
+
+        <div class="card-body-custom">
+
+            <div class="row g-3 align-items-end">
+
+                <div class="col-lg-4 col-md-6">
+                    <label class="form-label">جستجو</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-search"></i>
+                        </span>
+
+                        <input
+                            type="text"
+                            id="paymentSearch"
+                            class="form-control"
+                            placeholder="شماره مالیاتی، شرکت، بانک..."
+                        >
+                    </div>
+                </div>
+
+
+                <div class="col-lg-2 col-md-6">
+                    <label class="form-label">نوع پرداخت</label>
+
+                    <select class="form-select" id="paymentTypeFilter">
+                        <option value="">همه موارد</option>
+                        <option value="cheque">چک</option>
+                        <option value="transfer">حواله بانکی</option>
+                    </select>
+                </div>
+
+
+                <div class="col-lg-2 col-md-6">
+                    <label class="form-label">وضعیت</label>
+
+                    <select class="form-select" id="paymentStatusFilter">
+                        <option value="">همه وضعیت‌ها</option>
+                        <option value="pending">در انتظار پیگیری</option>
+                        <option value="paid">پرداخت شده</option>
+                        <option value="overdue">سررسید گذشته</option>
+                    </select>
+                </div>
+
+
+                <div class="col-lg-2 col-md-6">
+                    <label class="form-label">از تاریخ</label>
+                    <input type="text" class="form-control" placeholder="۱۴۰۵/۰۸/۰۱">
+                </div>
+
+
+                <div class="col-lg-2 col-md-6">
+                    <label class="form-label">تا تاریخ</label>
+                    <input type="text" class="form-control" placeholder="۱۴۰۵/۰۸/۳۰">
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Payments Table -->
+    <section class="content-card">
+
+        <div class="card-heading d-flex justify-content-between align-items-center">
+
+            <div>
+                <h6 class="mb-1">لیست پرداختی‌ها</h6>
+                <small class="text-muted">
+                    فهرست چک‌ها و حواله‌های ثبت‌شده
+                </small>
+            </div>
+
+            <span class="badge bg-secondary-subtle text-secondary">
+                ۳۰ پرداختی
+            </span>
+
+        </div>
+
+
+        <div class="table-responsive">
+
+            <table class="table custom-table align-middle mb-0">
+
+                <thead>
+                    <tr>
+                        <th>نوع پرداخت</th>
+                        <th>شرکت</th>
+                        <th>اطلاعات بانکی</th>
+                        <th>اسناد مالیاتی</th>
+                        <th>مبلغ</th>
+                        <th>تاریخ</th>
+                        <th>وضعیت</th>
+                        <th class="text-center">عملیات</th>
+                    </tr>
+                </thead>
+
+
+                <tbody id="paymentsTable">
+
+                    <!-- Cheque -->
+                    <tr
+                        data-type="cheque"
+                        data-status="pending"
+                        data-search="چک شرکت آریا بانک ملت 123456 234567"
+                    >
+
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="payment-type-icon cheque-icon">
+                                    <i class="bi bi-receipt"></i>
+                                </div>
+
+                                <div>
+                                    <strong class="d-block">چک</strong>
+                                    <small class="text-muted">شماره ۱۲۵۴</small>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>شرکت آریا</td>
+
+                        <td>
+                            <strong class="d-block">بانک ملت</strong>
+                            <small class="text-muted">شماره چک: ۱۲۵۴</small>
+                        </td>
+
+                        <td>
+                            <span class="tax-count">۲ سند</span>
+                            <small class="d-block text-muted">123456 ، 234567</small>
+                        </td>
+
+                        <td>
+                            <strong>۱۲۰,۰۰۰,۰۰۰</strong>
+                            <small class="d-block text-muted">تومان</small>
+                        </td>
+
+                        <td>
+                            <strong>۱۴۰۵/۰۸/۲۵</strong>
+                            <small class="d-block text-muted">سررسید</small>
+                        </td>
+
+                        <td>
+                            <span class="status-badge status-pending">
+                                در انتظار پیگیری
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="d-flex justify-content-center gap-1">
+                                <button class="btn btn-sm btn-light action-btn" title="مشاهده">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+
+                                <button class="btn btn-sm btn-light action-btn" title="ویرایش">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+
+                                <button class="btn btn-sm btn-light action-btn" title="بیشتر">
+                                    <i class="bi bi-three-dots"></i>
+                                </button>
+                            </div>
+                        </td>
+
+                    </tr>
+
+
+                    <!-- Transfer -->
+                    <tr
+                        data-type="transfer"
+                        data-status="pending"
+                        data-search="حواله شرکت پارس بانک ملی 345678 456789"
+                    >
+
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="payment-type-icon transfer-icon">
+                                    <i class="bi bi-bank"></i>
+                                </div>
+
+                                <div>
+                                    <strong class="d-block">حواله بانکی</strong>
+                                    <small class="text-muted">انتقال بانکی</small>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>شرکت پارس</td>
+
+                        <td>
+                            <strong class="d-block">بانک ملی</strong>
+                            <small class="text-muted">پیگیری: ۸۷۶۵۴۳۲</small>
+                        </td>
+
+                        <td>
+                            <span class="tax-count">۲ سند</span>
+                            <small class="d-block text-muted">345678 ، 456789</small>
+                        </td>
+
+                        <td>
+                            <strong>۸۰,۰۰۰,۰۰۰</strong>
+                            <small class="d-block text-muted">تومان</small>
+                        </td>
+
+                        <td>
+                            <strong>۱۴۰۵/۰۸/۲۰</strong>
+                            <small class="d-block text-muted">تاریخ انتقال</small>
+                        </td>
+
+                        <td>
+                            <span class="status-badge status-pending">
+                                در انتظار پیگیری
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="d-flex justify-content-center gap-1">
+                                <button class="btn btn-sm btn-light action-btn" title="مشاهده">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+
+                                <button class="btn btn-sm btn-light action-btn" title="ویرایش">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+
+                                <button class="btn btn-sm btn-light action-btn" title="بیشتر">
+                                    <i class="bi bi-three-dots"></i>
+                                </button>
+                            </div>
+                        </td>
+
+                    </tr>
+
+
+                    <!-- Cheque -->
+                    <tr
+                        data-type="cheque"
+                        data-status="paid"
+                        data-search="چک شرکت سپهر بانک تجارت 567890"
+                    >
+
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="payment-type-icon cheque-icon">
+                                    <i class="bi bi-receipt"></i>
+                                </div>
+
+                                <div>
+                                    <strong class="d-block">چک</strong>
+                                    <small class="text-muted">شماره ۸۹۲۱</small>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>شرکت سپهر</td>
+
+                        <td>
+                            <strong class="d-block">بانک تجارت</strong>
+                            <small class="text-muted">شماره چک: ۸۹۲۱</small>
+                        </td>
+
+                        <td>
+                            <span class="tax-count">۱ سند</span>
+                            <small class="d-block text-muted">567890</small>
+                        </td>
+
+                        <td>
+                            <strong>۵۰,۰۰۰,۰۰۰</strong>
+                            <small class="d-block text-muted">تومان</small>
+                        </td>
+
+                        <td>
+                            <strong>۱۴۰۵/۰۸/۱۵</strong>
+                            <small class="d-block text-muted">سررسید</small>
+                        </td>
+
+                        <td>
+                            <span class="status-badge status-paid">
+                                پرداخت شده
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="d-flex justify-content-center gap-1">
+                                <button class="btn btn-sm btn-light action-btn" title="مشاهده">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+
+                                <button class="btn btn-sm btn-light action-btn" title="ویرایش">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+
+                                <button class="btn btn-sm btn-light action-btn" title="بیشتر">
+                                    <i class="bi bi-three-dots"></i>
+                                </button>
+                            </div>
+                        </td>
+
+                    </tr>
+
+
+                    <!-- Empty result -->
+                    <tr id="emptyPaymentResult" class="d-none">
+                        <td colspan="8" class="text-center py-5">
+                            <i class="bi bi-search fs-3 text-muted d-block mb-2"></i>
+                            <span class="text-muted">
+                                پرداختی‌ای با این مشخصات پیدا نشد.
+                            </span>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- Pagination -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center p-3 gap-2">
+
+            <small class="text-muted" id="paymentResultCount">
+                نمایش ۳ پرداختی
+            </small>
+
+            <nav>
+                <ul class="pagination pagination-sm mb-0">
+                    <li class="page-item disabled">
+                        <a class="page-link">قبلی</a>
+                    </li>
+
+                    <li class="page-item active">
+                        <a class="page-link">۱</a>
+                    </li>
+
+                    <li class="page-item">
+                        <a class="page-link">۲</a>
+                    </li>
+
+                    <li class="page-item">
+                        <a class="page-link">بعدی</a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<style>
+
+.content-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.stat-card {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+    flex-shrink: 0;
+}
+
+.card-heading {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.card-body-custom {
+    padding: 20px;
+}
+
+.custom-table {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--text-color);
+    --bs-table-border-color: var(--border);
+    min-width: 1050px;
+}
+
+.custom-table thead th {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--table-head);
+    padding: 15px 12px;
+    white-space: nowrap;
+}
+
+.custom-table tbody td {
+    padding: 16px 12px;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.custom-table tbody tr:hover {
+    background: var(--hover-bg);
+}
+
+.payment-type-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+}
+
+.cheque-icon {
+    background: #fff3cd;
+    color: #b58105;
+}
+
+.transfer-icon {
+    background: #dbeafe;
+    color: #2563eb;
+}
+
+.tax-count {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 7px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.status-pending {
+    background: #fff3cd;
+    color: #997000;
+}
+
+.status-paid {
+    background: #d1e7dd;
+    color: #146c43;
+}
+
+.status-overdue {
+    background: #f8d7da;
+    color: #b02a37;
+}
+
+.action-btn {
+    border: 1px solid var(--border);
+    color: var(--text-color);
+    background: var(--card-bg);
+}
+
+.action-btn:hover {
+    background: var(--hover-bg);
+}
+
+.form-control,
+.form-select,
+.input-group-text {
+    border-color: var(--border);
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 .2rem rgba(13,110,253,.1);
+}
+
+.page-link {
+    background: var(--card-bg);
+    border-color: var(--border);
+    color: var(--text-color);
+}
+
+@media (max-width: 768px) {
+    .stat-card {
+        padding: 15px;
+    }
+
+    .card-body-custom {
+        padding: 15px;
+    }
+}
+
+</style>
+
+
+<script>
+
+const searchInput = document.getElementById('paymentSearch');
+const typeFilter = document.getElementById('paymentTypeFilter');
+const statusFilter = document.getElementById('paymentStatusFilter');
+
+const paymentRows = document.querySelectorAll(
+    '#paymentsTable tr[data-type]'
+);
+
+const emptyResult = document.getElementById('emptyPaymentResult');
+const resultCount = document.getElementById('paymentResultCount');
+
+function filterPayments() {
+
+    const search = searchInput.value.trim().toLowerCase();
+    const type = typeFilter.value;
+    const status = statusFilter.value;
+
+    let visibleCount = 0;
+
+    paymentRows.forEach(row => {
+
+        const rowType = row.dataset.type;
+        const rowStatus = row.dataset.status;
+        const rowSearch = row.dataset.search.toLowerCase();
+
+        const matchesSearch = rowSearch.includes(search);
+        const matchesType = !type || rowType === type;
+        const matchesStatus = !status || rowStatus === status;
+
+        const visible =
+            matchesSearch &&
+            matchesType &&
+            matchesStatus;
+
+        row.classList.toggle('d-none', !visible);
+
+        if (visible) visibleCount++;
+
+    });
+
+    emptyResult.classList.toggle('d-none', visibleCount !== 0);
+
+    resultCount.textContent =
+        `نمایش ${new Intl.NumberFormat('fa-IR').format(visibleCount)} پرداختی`;
+}
+
+searchInput.addEventListener('input', filterPayments);
+typeFilter.addEventListener('change', filterPayments);
+statusFilter.addEventListener('change', filterPayments);
+
+</script>
+
+{% endblock %}
