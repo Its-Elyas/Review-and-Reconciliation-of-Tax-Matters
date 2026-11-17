@@ -21,7 +21,7 @@ db.init_app(app=app)
 
 @app.route('/')
 def dashboard():
-    return render_template('banks.html')
+    return render_template('companies.html')
 
 
 

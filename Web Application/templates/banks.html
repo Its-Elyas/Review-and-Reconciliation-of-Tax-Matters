@@ -110,20 +110,20 @@
     <div class="d-flex justify-content-center gap-1">
 
         <button
-            type="button"
-            class="btn btn-sm btn-light action-btn"
-            title="مشاهده"
-            onclick="openBankModal('view', this)"
-            data-id="1"
-            data-name="بانک ملت"
-            data-branch="شعبه مرکزی اصفهان"
-            data-account="1234567890"
-            data-card="6037991234567890"
-            data-sheba="IR123456789012345678901234"
-            data-owner="شرکت آریا"
-        >
-            <i class="bi bi-eye"></i>
-        </button>
+    type="button"
+    class="btn btn-sm btn-light action-btn"
+    title="مشاهده"
+    onclick="openBankModal('view', this)"
+    data-id="1"
+    data-name="بانک ملت"
+    data-branch="شعبه مرکزی اصفهان"
+    data-account="1234567890"
+    data-card="6037991234567890"
+    data-sheba="IR123456789012345678901234"
+    data-owner="شرکت آریا"
+>
+    <i class="bi bi-eye"></i>
+</button>
 
         <button
             type="button"
@@ -422,84 +422,93 @@
 {% block script %}
 
 <script>
+    const bankModalElement = document.getElementById('bankModal');
+    const bankModal = new bootstrap.Modal(bankModalElement);
 
-const bankDetailsModal = new bootstrap.Modal(
-    document.getElementById('bankDetailsModal')
-);
+    const bankForm = document.getElementById('bankForm');
 
-function showBankDetails(button) {
-
-    const data = button.dataset;
-
-    document.getElementById('detailBankName').textContent = data.name || '-';
-    document.getElementById('detailBankName2').textContent = data.name || '-';
-
-    document.getElementById('detailBankBranch').textContent = data.branch || '-';
-    document.getElementById('detailBranch').textContent = data.branch || '-';
-
-    document.getElementById('detailBankId').textContent = `BK-${data.id}`;
-    document.getElementById('detailBankCode').textContent = data.code || '-';
-
-    document.getElementById('detailAccount').textContent = data.account || '-';
-    document.getElementById('detailCard').textContent = data.card || '-';
-    document.getElementById('detailSheba').textContent = data.sheba || '-';
-
-    document.getElementById('detailOwner').textContent = data.owner || '-';
-
-    document.getElementById('detailChequeCount').textContent =
-        new Intl.NumberFormat('fa-IR').format(data.cheques || 0);
-
-    document.getElementById('detailTransferCount').textContent =
-        new Intl.NumberFormat('fa-IR').format(data.transfers || 0);
-
-    const status = document.getElementById('detailBankStatus');
-
-    status.textContent = data.status || 'فعال';
-
-    const editButton = document.getElementById('detailEditBankBtn');
-
-    editButton.onclick = () => {
-        bankDetailsModal.hide();
-
-        // باز کردن مدال ویرایش قبلی
-        const editTrigger = document.querySelector(
-            `.edit-bank-btn[data-id="${CSS.escape(data.id)}"]`
-        );
-
-        if (editTrigger) {
-            openBankModal('edit', editTrigger);
-        }
+    const bankFields = {
+        id: document.getElementById('bankId'),
+        name: document.getElementById('bankName'),
+        branch: document.getElementById('bankBranch'),
+        account: document.getElementById('bankAccount'),
+        card: document.getElementById('bankCard'),
+        sheba: document.getElementById('bankSheba'),
+        owner: document.getElementById('bankOwner')
     };
 
-    bankDetailsModal.show();
-}
+    const modalTitle = document.getElementById('bankModalTitle');
+    const modalSubtitle = document.getElementById('bankModalSubtitle');
+    const submitButton = document.getElementById('bankSubmitBtn');
 
+    function openBankModal(mode, button = null) {
 
-// Copy buttons
-document.querySelectorAll('.copy-detail-btn').forEach(button => {
+        // پاک کردن اطلاعات قبلی
+        bankForm.reset();
 
-    button.addEventListener('click', async () => {
+        bankFields.id.value = '';
 
-        const targetId = button.dataset.copyTarget;
-        const value = document.getElementById(targetId).textContent.trim();
+        // فعال کردن تمام فیلدها
+        Object.values(bankFields).forEach(field => {
+            field.disabled = false;
+        });
 
-        try {
-            await navigator.clipboard.writeText(value);
+        submitButton.classList.remove('d-none');
 
-            button.innerHTML = '<i class="bi bi-check2"></i>';
+        // حالت ثبت بانک
+        if (mode === 'create') {
 
-            setTimeout(() => {
-                button.innerHTML = '<i class="bi bi-copy"></i>';
-            }, 1200);
+            modalTitle.textContent = 'ثبت بانک جدید';
+            modalSubtitle.textContent = 'اطلاعات بانک را وارد کنید.';
 
-        } catch (error) {
-            console.error('Copy failed:', error);
+            submitButton.innerHTML =
+                '<i class="bi bi-check2 ms-1"></i> ثبت بانک';
+
+            bankForm.action = '/banks/create';
         }
 
-    });
+        // حالت ویرایش یا مشاهده
+        else if (mode === 'edit' || mode === 'view') {
 
-});
+            if (!button) return;
 
+            const data = button.dataset;
+
+            bankFields.id.value = data.id || '';
+            bankFields.name.value = data.name || '';
+            bankFields.branch.value = data.branch || '';
+            bankFields.account.value = data.account || '';
+            bankFields.card.value = data.card || '';
+            bankFields.sheba.value = (data.sheba || '').replace(/^IR/, '');
+            bankFields.owner.value = data.owner || '';
+
+            if (mode === 'edit') {
+
+                modalTitle.textContent = 'ویرایش اطلاعات بانک';
+                modalSubtitle.textContent = 'اطلاعات بانک را ویرایش کنید.';
+
+                submitButton.innerHTML =
+                    '<i class="bi bi-check2 ms-1"></i> ذخیره تغییرات';
+
+                bankForm.action = `/banks/${data.id}/update`;
+            }
+
+            if (mode === 'view') {
+
+                modalTitle.textContent = 'مشاهده اطلاعات بانک';
+                modalSubtitle.textContent = 'اطلاعات ثبت‌شده این بانک';
+
+                // غیرفعال کردن فیلدها در حالت مشاهده
+                Object.values(bankFields).forEach(field => {
+                    field.disabled = true;
+                });
+
+                submitButton.classList.add('d-none');
+            }
+        }
+
+        bankModal.show();
+    }
 </script>
 
 

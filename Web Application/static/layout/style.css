@@ -1040,7 +1040,8 @@ a {
 }
 
 .bank-modal-content .modal-body {
-    background: var(--card-bg);
+    background: rgba(0, 30, 76, 0.9);
+    ;
 }
 
 .bank-modal-icon {
